@@ -2,6 +2,7 @@ import React from 'react';
 import {Button} from "@mui/material";
 import { useQuery } from '@apollo/client';
 import { GET_USER_BASIC_INFO } from '../graphql/queries.ts';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 
 const PersonalInfoTab = () => {
 
@@ -13,15 +14,14 @@ const PersonalInfoTab = () => {
   if (error) return <div>Error: {error.message}</div>;
 
   const user = data.user;
+  const parts = user.nationalId.expiryDate.split("T")[0].split('-');
   return (
     <>
     <div className='info'>
       <div className="grid grid-cols-1 gap-4">
-        {/* Basic Information */}
         <div className="bg-white p-6 rounded border shadow rounded mb-6" style={{gap:'4px'}}>
           <div className="flex justify-between items-center" >
             <h2 className="text-lg font-semibold text-navy-400">Basic Information</h2>
-            {/* <button className="bg-blue-500 text-white px-4 py-2 rounded">Edit</button> */}
             <Button className="edit-button" style={{ textTransform: 'none' }} variant="contained">Edit</Button>
           </div>
           <div className="grid grid-cols-2 gap-4 mt-4">
@@ -31,7 +31,7 @@ const PersonalInfoTab = () => {
             </div>
             <div style={{margin: '4px'}}>
               <p className="text-sm font-weight-400 text-gray-500">National ID Expiring Date</p>
-              <p className="text-lg font-semibold text-navy-400">{user.nationalId.expiryDate}</p>
+              <p className="text-lg font-semibold text-navy-400">{parts[2]} / {parts[1]} / {parts[0]}</p>
             </div>
             <div style={{margin: '4px'}}>
               <p className="text-sm font-weight-400 text-gray-500">Title</p>
@@ -80,11 +80,19 @@ const PersonalInfoTab = () => {
             </div>
             <div style={{margin: '4px'}}>
               <p className="text-sm font-weight-400 text-gray-500">Nationality</p>
-              <p className="text-lg font-semibold text-navy-400">{user.nationalities.country.name}</p>
+              {user.nationalities.length > 0 ? (
+              <p className="text-lg font-semibold text-navy-400">{user.nationalities[0].country.name}</p>
+              ) : (<p className="text-lg font-semibold text-navy-400">None</p>)}
             </div>
             <div style={{margin: '4px'}}>
               <p className="text-sm font-weight-400 text-gray-500">Additional Nationality</p>
-              <p className="text-lg font-semibold text-navy-400">-</p>
+              {user.nationalities.length > 1 ? (
+                user.nationalities.slice(1).map((nationality) => (
+              <p key={nationality.country.id} className="text-lg font-semibold text-navy-400">{nationality.country.name}</p>
+                ))
+              ) : (
+                <p className="text-lg font-semibold text-navy-400">None</p>
+              )}
             </div>
             <div style={{margin: '4px'}}>
               <p className="text-sm font-weight-400 text-gray-500">Passport Number</p>
@@ -222,7 +230,7 @@ const PersonalInfoTab = () => {
             </div>
             <div style={{margin: '4px'}}>
               <p className="text-sm font-weight-400 text-gray-500">Document</p>
-              <p className="text-lg font-semibold text-navy-400"></p>
+              <p style= {{backgroundColor:"#ECECEC", paddingBottom:"2px", paddingTop:"2px"}}className="text-lg font-semibold text-navy-400"> &nbsp; <AttachFileIcon  /> filename1.docx</p>
             </div>
           </div>
       </div>

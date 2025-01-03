@@ -1,11 +1,8 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_USER_BASIC_INFO } from '../graphql/queries.ts';
-import { useNavigate } from 'react-router-dom';
 
 const BasicInfoCard = () => {
-  const navigate = useNavigate();
-
   const { data, loading, error } = useQuery(GET_USER_BASIC_INFO, {
     variables: { userId: 1 },
   });
@@ -16,16 +13,28 @@ const BasicInfoCard = () => {
   const user = data.user;
 
   return (
-    <div className="p-4 bg-white shadow-md rounded-md">
-      <h1 className="text-xl font-semibold mb-2">Info Card</h1>
-      <p><strong>First Name:</strong> {user.firstName}</p>
-      <p><strong>Family Name:</strong> {user.familyName}</p>
-      <button
-        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        onClick={() => navigate('/edit')}
-      >
-        Edit
-      </button>
+    <div className="bg-white shadow-md section">
+      <div className="inner-section1">
+      <img
+        src={require("./pic2.png")}
+        alt="info"
+        style={{maxWidth:"120px", height: "120px", paddingBottom:"10px"}}
+      />
+        <div className="inner-name">
+          <h1  style={{color:"#051D49", fontSize:"20px", fontWeight:"600", lineHeight:"30px", paddingBottom:"10px" }} className="font-semibold">{user.firstName} {user.familyName} </h1>
+          <h2  style={{color:"#737791", fontSize:"16px", fontWeight:"400", lineHeight:"20px" }}>Senior Product Manager </h2>
+        </div>
+      </div>
+      <hr />
+      <div style={{paddingTop:"30px"}}className="inner-section2">
+        <div style={{width:"345px", height:"59px", borderRadius:"8px", padding:"16px", backgroundColor:"#F4F8FE"}}>
+          <h1 style={{width:"313px", height:"27px", fontWeight:"500", fontSize:"18px", lineHeight:"27px", color:"#0F6CBD"}}>Personal Information</h1>
+        </div>
+        <div style={{width:"345px", height:"59px", borderRadius:"8px", paddingRight:"16px", paddingLeft:"16px", paddingTop:"21px", paddingBottom:"16px"}}>
+          <h1 style={{width:"313px", height:"27px", fontWeight:"400", fontSize:"18px", lineHeight:"27px", color:"#051D49"}}>Financial Information</h1>
+        </div>
+      </div>
+
     </div>
   );
 };

@@ -8,22 +8,21 @@ const ProfileHeader = () => {
     <>
     <div className="flex prof">
       <div className='txt'> 
-        <text className="text-3xl">John Smith Profile</text>
-        <br/>
+        <p className="text-3xl">John Smith Profile</p>
       <div className="flex space-x-2 items-center">
         <div className='dash'>
-          <text className="text-gray-600"> Dashboard </text>
-          <text className="text-cyan-400">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</text>
+          <p className="text-gray-600"> Dashboard </p>
+          <p className="text-cyan-400">&nbsp;&gt;&nbsp;</p>
         </div>
         <div className='hr'>
-          <text className="text-gray-601"> HR manage </text>
-          <text className="text-cyan-400">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</text>
+          <p className="text-gray-601"> HR manage </p>
+          <p className="text-cyan-400">&nbsp;&gt;&nbsp;</p>
         </div>
         <div className='emp'>
-          <text className="text-gray-602"> Employees </text>
-          <text className="text-cyan-400">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</text>
+          <p className="text-gray-602"> Employees </p>
+          <p className="text-cyan-400">&nbsp;&gt;&nbsp;</p>
         </div>
-        <text className="text-cyan-800"> John Smith Profile </text>
+        <p className="text-cyan-800"> John Smith Profile </p>
       </div>
       
       </div>

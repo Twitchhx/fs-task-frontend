@@ -8,6 +8,28 @@ export const UPDATE_USER_MUTATION = gql`
       fatherName
       grandfatherName
       familyName
+      localizedName {
+        firstName
+        fatherName
+        grandfatherName
+        familyName
+      }
+      nationalId {
+        idNumber
+        expiryDate
+      }
+      nationalities {
+        country {
+          id
+          name
+        }
+        countryId
+      }
+      maritalStatus {
+        id
+        name
+      }
+      dependants
     }
   }
 `;
