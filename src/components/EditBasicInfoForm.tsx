@@ -21,59 +21,9 @@ const EditBasicInfoForm: React.FC<EditBasicInfoFormProps> = ({ user, onCancel })
   });
 
   const [updateUser] = useMutation(UPDATE_USER_MUTATION);
-  
-  // const onSubmit = async (data: any) => {
-  //     const sanitizedUpdateInput = {
-  //     firstName: data.firstName,
-  //     fatherName: data.fatherName,
-  //     grandfatherName: data.grandfatherName,
-  //     familyName: data.familyName,
-  //     localizedName: {
-  //       firstName: data.localizedName?.firstName,
-  //       fatherName: data.localizedName?.fatherName,
-  //       grandfatherName: data.localizedName?.grandfatherName,
-  //       familyName: data.localizedName?.familyName,
-  //     },
-  //     nationalId: {
-  //       idNumber: data.nationalId?.idNumber,
-  //       expiryDate: data.nationalId?.expiryDate,
-  //     },
-  //     nationalities: [
-  //       {
-  //         country: {
-  //           name: data.nationalities[0]?.country?.name,
-  //         },
-  //       },
-  //       {
-  //         country: {
-  //           name: data.nationalities[1]?.country?.name,
-  //         },
-  //       },
-  //     ],
-  //     maritalStatus: {
-  //       name: data.maritalStatus?.name,
-  //     },
-  //     dependants: Number(data.dependants),
-  //   };
-  
-  //   try {
-  //     const result = await updateUser({
-  //       variables: {
-  //         userId: 1,
-  //         updateInput: omitTypename(sanitizedUpdateInput),
-  //       },
-  //     });
-  //     console.log('Updated Data:', result.data.updateUser);
-  //     window.location.reload();
-  //     onCancel();
-  //   } catch (error) {
-  //     console.error('Error updating user:', error);
-  //     console.log(JSON.stringify(error, null, 2));
-  //   }
-  // };
 
   const onSubmit = async (data: any) => {
-    const existingUser = cleanUser; // Assuming cleanUser is defined and contains the current user data
+    const existingUser = cleanUser;
   
     const sanitizedUpdateInput = {
       firstName: data.firstName || existingUser.firstName,

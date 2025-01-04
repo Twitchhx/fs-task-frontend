@@ -10,7 +10,7 @@
   --tw-scale-y: 1;
   --tw-pan-x:  ;
   --tw-pan-y:  ;
-  --tw-pinch-zoom:  ;
+  --tw-pinch-zoor:  ;
   --tw-scroll-snap-strictness: proximity;
   --tw-gradient-from-position:  ;
   --tw-gradient-via-position:  ;
@@ -356,6 +356,7 @@ input:where([type='submit']) {
   /* 2 */
   background-image: none;
   /* 2 */
+  appearance: none;
 }
 
 
@@ -402,6 +403,8 @@ Correct the cursor style of increment and decrement buttons in Safari.
   /* 1 */
   outline-offset: -2px;
   /* 2 */
+  appearance: none;
+
 }
 
 /*

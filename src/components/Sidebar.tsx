@@ -7,7 +7,7 @@ import InboxOutlinedIcon from '@mui/icons-material/InboxOutlined';
 const Sidebar = () => {
   return (
     <nav className="w-20 bg-white text-white flex flex-col items-center sidebar">
-      <div className='mb-6'>
+      <div>
           <img src={require("./logo.png")} alt = "p" className="w-10 h-10"/>
         </div>
       <nav className="w-inner h-inner bg-white text-white flex flex-col items-center">
