@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Button} from "@mui/material";
 import { useQuery } from '@apollo/client';
 import { GET_USER_BASIC_INFO } from '../graphql/queries.ts';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
+import EditBasicInfoForm from './EditBasicInfoForm.tsx';
 
 const PersonalInfoTab = () => {
 
   const { data, loading, error } = useQuery(GET_USER_BASIC_INFO, {
     variables: { userId: 1 },
   });
+
+  const [isEditing, setIsEditing] = useState(false);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -17,12 +20,13 @@ const PersonalInfoTab = () => {
   const parts = user.nationalId.expiryDate.split("T")[0].split('-');
   return (
     <>
+    {!isEditing ? (
     <div className='info'>
       <div className="grid grid-cols-1 gap-4">
         <div className="bg-white p-6 rounded border shadow rounded mb-6" style={{gap:'4px'}}>
           <div className="flex justify-between items-center" >
             <h2 className="text-lg font-semibold text-navy-400">Basic Information</h2>
-            <Button className="edit-button" style={{ textTransform: 'none' }} variant="contained">Edit</Button>
+            <Button className="edit-button" style={{ textTransform: 'none' }} variant="contained" onClick={() => setIsEditing(true)} >Edit</Button>
           </div>
           <div className="grid grid-cols-2 gap-4 mt-4">
             <div style={{margin: '4px'}}>
@@ -37,7 +41,7 @@ const PersonalInfoTab = () => {
               <p className="text-sm font-weight-400 text-gray-500">Title</p>
               <p className="text-lg font-semibold text-navy-400">Mr.</p>
             </div>
-            <br></br>
+            <br />
             <div style={{margin: '4px'}}>
               <p className="text-sm font-weight-400 text-gray-500">First Name</p>
               <p className="text-lg font-semibold text-navy-400">{user.firstName}</p>
@@ -235,6 +239,12 @@ const PersonalInfoTab = () => {
           </div>
       </div>
     </div>
+  ) : (
+    <EditBasicInfoForm
+      user={user}
+      onCancel={() => setIsEditing(false)}
+      />
+    )}
     </>
   );
 };
