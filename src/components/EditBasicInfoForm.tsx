@@ -22,38 +22,83 @@ const EditBasicInfoForm: React.FC<EditBasicInfoFormProps> = ({ user, onCancel })
 
   const [updateUser] = useMutation(UPDATE_USER_MUTATION);
   
+  // const onSubmit = async (data: any) => {
+  //     const sanitizedUpdateInput = {
+  //     firstName: data.firstName,
+  //     fatherName: data.fatherName,
+  //     grandfatherName: data.grandfatherName,
+  //     familyName: data.familyName,
+  //     localizedName: {
+  //       firstName: data.localizedName?.firstName,
+  //       fatherName: data.localizedName?.fatherName,
+  //       grandfatherName: data.localizedName?.grandfatherName,
+  //       familyName: data.localizedName?.familyName,
+  //     },
+  //     nationalId: {
+  //       idNumber: data.nationalId?.idNumber,
+  //       expiryDate: data.nationalId?.expiryDate,
+  //     },
+  //     nationalities: [
+  //       {
+  //         country: {
+  //           name: data.nationalities[0]?.country?.name,
+  //         },
+  //       },
+  //       {
+  //         country: {
+  //           name: data.nationalities[1]?.country?.name,
+  //         },
+  //       },
+  //     ],
+  //     maritalStatus: {
+  //       name: data.maritalStatus?.name,
+  //     },
+  //     dependants: Number(data.dependants),
+  //   };
+  
+  //   try {
+  //     const result = await updateUser({
+  //       variables: {
+  //         userId: 1,
+  //         updateInput: omitTypename(sanitizedUpdateInput),
+  //       },
+  //     });
+  //     console.log('Updated Data:', result.data.updateUser);
+  //     window.location.reload();
+  //     onCancel();
+  //   } catch (error) {
+  //     console.error('Error updating user:', error);
+  //     console.log(JSON.stringify(error, null, 2));
+  //   }
+  // };
+
   const onSubmit = async (data: any) => {
-      const sanitizedUpdateInput = {
-      firstName: data.firstName,
-      fatherName: data.fatherName,
-      grandfatherName: data.grandfatherName,
-      familyName: data.familyName,
+    const existingUser = cleanUser; // Assuming cleanUser is defined and contains the current user data
+  
+    const sanitizedUpdateInput = {
+      firstName: data.firstName || existingUser.firstName,
+      fatherName: data.fatherName || existingUser.fatherName,
+      grandfatherName: data.grandfatherName || existingUser.grandfatherName,
+      familyName: data.familyName || existingUser.familyName,
       localizedName: {
-        firstName: data.localizedName?.firstName,
-        fatherName: data.localizedName?.fatherName,
-        grandfatherName: data.localizedName?.grandfatherName,
-        familyName: data.localizedName?.familyName,
+        firstName: data.localizedName?.firstName || existingUser.localizedName.firstName,
+        fatherName: data.localizedName?.fatherName || existingUser.localizedName.fatherName,
+        grandfatherName: data.localizedName?.grandfatherName || existingUser.localizedName.grandfatherName,
+        familyName: data.localizedName?.familyName || existingUser.localizedName.familyName,
       },
       nationalId: {
-        idNumber: data.nationalId?.idNumber,
-        expiryDate: data.nationalId?.expiryDate,
+        idNumber: data.nationalId?.idNumber || existingUser.nationalId.idNumber,
+        expiryDate: data.nationalId?.expiryDate || existingUser.nationalId.expiryDate,
       },
-      nationalities: [
-        {
-          country: {
-            name: data.nationalities[0]?.country?.name,
-          },
+      nationalities: existingUser.nationalities.map((nationality, index) => ({
+        country: {
+          name: (data.nationalities && data.nationalities[index]?.country?.name) || nationality.country.name,
         },
-        {
-          country: {
-            name: data.nationalities[1]?.country?.name,
-          },
-        },
-      ],
+      })),
       maritalStatus: {
-        name: data.maritalStatus?.name,
+        name: data.maritalStatus?.name || existingUser.maritalStatus.name,
       },
-      dependants: Number(data.dependants),
+      dependants: data.dependants !== undefined ? Number(data.dependants) : existingUser.dependants,
     };
   
     try {
